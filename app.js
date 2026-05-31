@@ -1,277 +1,179 @@
-// Wait for full DOM
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
 
-// ===== STAR CANVAS =====
-(function () {
-  const canvas = document.getElementById('starCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  let W, H, stars = [], shootingStars = [];
+  // ===== AURORA + STARFIELD =====
+  (function () {
+    const c = document.getElementById('fx');
+    if (!c) return;
+    const ctx = c.getContext('2d');
+    let W, H, stars = [], shooters = [], t = 0;
+    function resize() { W = c.width = innerWidth; H = c.height = innerHeight; initStars(); }
+    function initStars() {
+      stars = [];
+      const n = Math.min(260, Math.floor(W * H / 7000));
+      for (let i = 0; i < n; i++) {
+        stars.push({
+          x: Math.random() * W, y: Math.random() * H,
+          r: Math.random() * 1.4 + 0.3,
+          a: Math.random() * 0.6 + 0.2,
+          tw: Math.random() * 0.006 + 0.001, td: Math.random() > .5 ? 1 : -1
+        });
+      }
+    }
+    resize(); addEventListener('resize', resize);
 
-  function resize() {
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-  resize();
-  window.addEventListener('resize', resize);
+    // aurora ribbons
+    const bands = [
+      { hue: 'rgba(95,240,168,', y: 0.20, amp: 70, len: 0.9, sp: 0.000022, ph: 0, w: 150 },
+      { hue: 'rgba(63,224,197,', y: 0.30, amp: 90, len: 1.2, sp: 0.000030, ph: 2, w: 130 },
+      { hue: 'rgba(155,127,232,', y: 0.26, amp: 60, len: 0.7, sp: 0.000018, ph: 4, w: 170 },
+      { hue: 'rgba(233,143,200,', y: 0.16, amp: 50, len: 1.0, sp: 0.000035, ph: 1, w: 110 }
+    ];
 
-  function initStars() {
-    stars = [];
-    for (let i = 0; i < 200; i++) {
-      stars.push({
-        x: Math.random() * W,
-        y: Math.random() * H,
-        r: Math.random() * 1.5 + 0.3,
-        alpha: Math.random() * 0.7 + 0.1,
-        speed: Math.random() * 0.3 + 0.05,
-        twinkleSpeed: Math.random() * 0.02 + 0.005,
-        twinkleDir: Math.random() > 0.5 ? 1 : -1
+    function drawAurora() {
+      bands.forEach(b => {
+        const baseY = H * b.y;
+        const grad = ctx.createLinearGradient(0, baseY - b.w, 0, baseY + b.w);
+        grad.addColorStop(0, b.hue + '0)');
+        grad.addColorStop(0.5, b.hue + '0.09)');
+        grad.addColorStop(1, b.hue + '0)');
+        ctx.beginPath();
+        ctx.moveTo(0, baseY);
+        for (let x = 0; x <= W; x += 14) {
+          const y = baseY
+            + Math.sin(x * 0.0016 * b.len + t * b.sp * 1000 + b.ph) * b.amp
+            + Math.sin(x * 0.004 * b.len + t * b.sp * 600 + b.ph) * (b.amp * 0.4);
+          ctx.lineTo(x, y);
+        }
+        ctx.lineTo(W, H * 0); ctx.lineTo(W, baseY + b.w);
+        for (let x = W; x >= 0; x -= 14) {
+          const y = baseY + b.w
+            + Math.sin(x * 0.0016 * b.len + t * b.sp * 1000 + b.ph) * b.amp
+            + Math.sin(x * 0.004 * b.len + t * b.sp * 600 + b.ph) * (b.amp * 0.4);
+          ctx.lineTo(x, y);
+        }
+        ctx.closePath();
+        ctx.fillStyle = grad;
+        ctx.fill();
       });
     }
-  }
-  initStars();
 
-  function spawnShootingStar() {
-    if (Math.random() < 0.003) {
-      shootingStars.push({
-        x: Math.random() * W,
-        y: Math.random() * H * 0.5,
-        len: Math.random() * 120 + 60,
-        speed: Math.random() * 8 + 6,
-        alpha: 1,
-        angle: Math.PI / 4 + (Math.random() - 0.5) * 0.3
-      });
+    function spawnShooter() {
+      if (Math.random() < 0.004) {
+        shooters.push({
+          x: Math.random() * W, y: Math.random() * H * 0.4,
+          len: Math.random() * 120 + 70, sp: Math.random() * 9 + 7,
+          a: 1, ang: Math.PI / 4 + (Math.random() - 0.5) * 0.4
+        });
+      }
     }
+
+    function draw() {
+      t++;
+      ctx.clearRect(0, 0, W, H);
+      drawAurora();
+
+      stars.forEach(s => {
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.28);
+        ctx.fillStyle = `rgba(228,237,255,${s.a})`; ctx.fill();
+      });
+
+      spawnShooter();
+      shooters = shooters.filter(s => s.a > 0);
+      shooters.forEach(s => {
+        const g = ctx.createLinearGradient(s.x, s.y, s.x - Math.cos(s.ang) * s.len, s.y - Math.sin(s.ang) * s.len);
+        g.addColorStop(0, `rgba(174,240,230,${s.a})`);
+        g.addColorStop(1, 'rgba(174,240,230,0)');
+        ctx.beginPath(); ctx.strokeStyle = g; ctx.lineWidth = 1.4;
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(s.x - Math.cos(s.ang) * s.len, s.y - Math.sin(s.ang) * s.len);
+        ctx.stroke();
+        s.x += Math.cos(s.ang) * s.sp; s.y += Math.sin(s.ang) * s.sp; s.a -= 0.02;
+      });
+
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  // ===== HEADER =====
+  const hdr = document.getElementById('hdr');
+  if (hdr) addEventListener('scroll', () => hdr.classList.toggle('scrolled', scrollY > 50));
+
+  // ===== MOBILE =====
+  const burger = document.getElementById('burger'), mnav = document.getElementById('mnav');
+  if (burger && mnav) {
+    burger.addEventListener('click', () => mnav.classList.toggle('open'));
+    mnav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mnav.classList.remove('open')));
   }
 
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    stars.forEach(s => {
-      s.alpha += s.twinkleSpeed * s.twinkleDir;
-      if (s.alpha > 0.9 || s.alpha < 0.05) s.twinkleDir *= -1;
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(220, 200, 255, ${s.alpha})`;
-      ctx.fill();
-    });
-    spawnShootingStar();
-    shootingStars = shootingStars.filter(s => s.alpha > 0);
-    shootingStars.forEach(s => {
-      const grad = ctx.createLinearGradient(s.x, s.y,
-        s.x - Math.cos(s.angle) * s.len,
-        s.y - Math.sin(s.angle) * s.len);
-      grad.addColorStop(0, `rgba(201, 168, 76, ${s.alpha})`);
-      grad.addColorStop(1, 'rgba(201, 168, 76, 0)');
-      ctx.beginPath();
-      ctx.strokeStyle = grad;
-      ctx.lineWidth = 1.5;
-      ctx.moveTo(s.x, s.y);
-      ctx.lineTo(s.x - Math.cos(s.angle) * s.len, s.y - Math.sin(s.angle) * s.len);
-      ctx.stroke();
-      s.x += Math.cos(s.angle) * s.speed;
-      s.y += Math.sin(s.angle) * s.speed;
-      s.alpha -= 0.02;
-    });
-    requestAnimationFrame(draw);
-  }
-  draw();
-})();
-
-// ===== HEADER SCROLL =====
-const header = document.getElementById('header');
-if (header) {
-  window.addEventListener('scroll', () => {
-    header.classList.toggle('scrolled', window.scrollY > 60);
-  });
-}
-
-// ===== MOBILE MENU =====
-const burger = document.getElementById('burger');
-const mobileNav = document.getElementById('mobileNav');
-if (burger && mobileNav) {
-  burger.addEventListener('click', () => mobileNav.classList.toggle('open'));
-  document.querySelectorAll('.mob-link').forEach(link => {
-    link.addEventListener('click', () => mobileNav.classList.remove('open'));
-  });
-}
-
-// ===== REVEAL ON SCROLL =====
-const revealEls = document.querySelectorAll('.reveal');
-if (revealEls.length) {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
+  // ===== REVEAL =====
+  const obs = new IntersectionObserver((es) => {
+    es.forEach(e => {
       if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
+        const d = e.target.dataset.delay || 0;
+        setTimeout(() => e.target.classList.add('in'), d);
+        obs.unobserve(e.target);
       }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
-  revealEls.forEach(el => observer.observe(el));
-}
+  }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-// ===== COUNTER ANIMATION =====
-function animateCounter(el) {
-  const target = parseInt(el.dataset.target);
-  const duration = 2000;
-  const start = performance.now();
-  function update(now) {
-    const elapsed = now - start;
-    const progress = Math.min(elapsed / duration, 1);
-    const ease = 1 - Math.pow(1 - progress, 3);
-    el.textContent = Math.round(ease * target).toLocaleString('ru');
-    if (progress < 1) requestAnimationFrame(update);
+  // ===== COUNTERS =====
+  function count(el) {
+    const t = parseInt(el.dataset.target), suf = el.dataset.suffix || '', s = performance.now();
+    (function tick(n) {
+      const p = Math.min((n - s) / 1800, 1), e = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.round(e * t).toLocaleString('ru') + suf;
+      if (p < 1) requestAnimationFrame(tick);
+    })(s);
   }
-  requestAnimationFrame(update);
-}
-
-const statsEl = document.querySelector('.hero-stats');
-if (statsEl) {
-  const statsObserver = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.querySelectorAll('.stat-num').forEach(animateCounter);
-        statsObserver.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.5 });
-  statsObserver.observe(statsEl);
-}
-
-// ===== REVIEWS =====
-const reviews = [
-  {
-    stars: 5,
-    text: "Честно говоря, шла с большим скептицизмом. Подруга уговорила. Косандра сказала такие вещи про мою семью, про которые вообще никто не знал — даже мама. Про бабушку сказала что-то точь-в-точь. После этого сеанса многое встало на своё место. Спасибо огромное.",
-    name: "Айгерим М.", city: "Алматы", service: "Расклад Таро", initials: "А"
-  },
-  {
-    stars: 5,
-    text: "Обращалась насчёт отношений — всё было очень плохо, думала расставаться. Косандра сделала расклад, объяснила что происходит с его стороны и со стороны нашей совместной энергии. Дала конкретные советы. Прошло 2 месяца — у нас всё наладилось. Не ожидала такого результата.",
-    name: "Карина Л.", city: "Нур-Султан", service: "Любовный расклад", initials: "К"
-  },
-  {
-    stars: 5,
-    text: "Хотела разобраться с работой, уже год не могла понять — оставаться или уходить. После консультации поняла что мне нужно делать. Косандра не просто гадает, она реально объясняет всё подробно. Через три недели уволилась и уже нашла новое место. Всё как она и говорила.",
-    name: "Дина Р.", city: "Шымкент", service: "Карты Ленорман", initials: "Д"
-  },
-  {
-    stars: 5,
-    text: "Делала диагностику порчи. Не буду рассказывать детали, но то что она нашла — это жесть. Объяснила откуда это и как убрать. После работы с ней реально стало легче, перестали преследовать неудачи. Рекомендую всем кто чувствует что что-то идёт не так в жизни.",
-    name: "Гульнара А.", city: "Алматы", service: "Диагностика негатива", initials: "Г"
-  },
-  {
-    stars: 5,
-    text: "Нумерологию делала для себя и мужа. Очень интересно — многие черты характера, которые я давно заметила у него, полностью совпали с его числом судьбы. Про меня тоже всё правда. Косандра ещё дала рекомендации по благоприятным периодам. Очень познавательно и точно.",
-    name: "Сауле Б.", city: "Талдыкорган", service: "Нумерология", initials: "С"
-  },
-  {
-    stars: 5,
-    text: "Обращался по поводу бизнеса — открывал новое дело, хотел понять перспективы. Косандра назвала точный период когда стоит запускаться и предупредила о двух рисках. Один из них уже реализовался в точности как она сказала — хорошо что был готов. Деньги потраченные на консультацию окупились многократно.",
-    name: "Рустем К.", city: "Алматы", service: "Расклад на бизнес", initials: "Р"
-  },
-  {
-    stars: 5,
-    text: "Пишу спустя полгода. Косандра предсказала мне встречу с человеком из прошлого — именно так и произошло. И сказала что из этого получится. Всё вышло один в один. Я была в шоке когда вспомнила что она говорила. Теперь уже вторая консультация, и снова точно.",
-    name: "Лейла Ж.", city: "Кокшетау", service: "Полная диагностика судьбы", initials: "Л"
-  },
-  {
-    stars: 5,
-    text: "Долго не решалась, потом всё-таки написала. Отвечает быстро, всё объясняет без лишней воды. Рунический расклад сделала подробно, дала распечатку значений. После сеанса поняла что меня держит на старом месте работы и почему я боюсь перемен. Это была настоящая работа с собой.",
-    name: "Инна С.", city: "Алматы", service: "Руны", initials: "И"
-  },
-  {
-    stars: 4,
-    text: "В целом очень доволен. Сделал расклад по здоровью после операции, хотел понять прогноз. Косандра сказала что восстановление займёт дольше чем сказали врачи но пойдёт хорошо — так и вышло. Единственное — ждал записи три дня, но оно того стоило. Спасибо.",
-    name: "Марат Т.", city: "Семей", service: "Расклад на здоровье", initials: "М"
+  const foot = document.querySelector('.hero-foot');
+  if (foot) {
+    const to = new IntersectionObserver((es) => {
+      es.forEach(e => { if (e.isIntersecting) { e.target.querySelectorAll('b').forEach(count); to.unobserve(e.target); } });
+    }, { threshold: .4 });
+    to.observe(foot);
   }
-];
 
-function renderReviews() {
+  // ===== REVIEWS =====
+  const reviews = [
+    { stars: 5, text: "Шла с большим скептицизмом — подруга уговорила. Косандра рассказала такие вещи про мою семью, о которых не знал вообще никто, даже мама. После сеанса многое встало на свои места. Спасибо огромное.", name: "Айгерим М.", city: "Алматы", srv: "Расклад Таро", i: "А" },
+    { stars: 5, text: "Обращалась насчёт отношений — всё было плохо, думала расставаться. Косандра объяснила, что происходит с его стороны, дала конкретные советы. Прошло два месяца — всё наладилось. Не ожидала такого результата.", name: "Карина Л.", city: "Астана", srv: "Любовный расклад", i: "К" },
+    { stars: 5, text: "Год не могла понять — оставаться на работе или уходить. После консультации всё прояснилось. Косандра не просто гадает, она реально объясняет. Через три недели уволилась и нашла новое место. Всё как она говорила.", name: "Дина Р.", city: "Шымкент", srv: "Карты Ленорман", i: "Д" },
+    { stars: 5, text: "Делала диагностику негатива. Детали рассказывать не буду, но то, что она нашла, объяснило очень многое. После работы с ней стало заметно легче, перестали преследовать неудачи. Рекомендую всем.", name: "Гульнара А.", city: "Алматы", srv: "Очищение", i: "Г" },
+    { stars: 5, text: "Нумерологию делала для себя и мужа. Очень точно — черты характера, которые я давно за ним замечала, полностью совпали с его числом судьбы. Ещё дала рекомендации по благоприятным периодам. Познавательно.", name: "Сауле Б.", city: "Караганда", srv: "Нумерология", i: "С" },
+    { stars: 5, text: "Открывал новое дело, хотел понять перспективы. Косандра назвала точный период запуска и предупредила о двух рисках. Один уже реализовался в точности — хорошо, что был готов. Консультация окупилась многократно.", name: "Рустем К.", city: "Алматы", srv: "Расклад на бизнес", i: "Р" },
+    { stars: 5, text: "Пишу спустя полгода. Косандра предсказала встречу с человеком из прошлого — так и произошло, один в один. Я была в шоке, когда вспомнила её слова. Теперь уже вторая консультация, и снова всё точно.", name: "Лейла Ж.", city: "Кокшетау", srv: "Полная диагностика", i: "Л" },
+    { stars: 5, text: "Долго не решалась, потом всё-таки написала. Отвечает быстро, объясняет без лишней воды. Рунический расклад сделала подробно. После сеанса поняла, что меня держит на старом месте и почему я боюсь перемен.", name: "Инна С.", city: "Алматы", srv: "Руны", i: "И" },
+    { stars: 4, text: "В целом очень доволен. Сделал расклад по здоровью после операции. Косандра сказала, что восстановление займёт дольше, чем обещали врачи, но пойдёт хорошо — так и вышло. Ждал записи пару дней, но оно того стоило.", name: "Марат Т.", city: "Семей", srv: "Расклад на здоровье", i: "М" }
+  ];
   const grid = document.getElementById('reviewsGrid');
-  if (!grid) return;
-
-  grid.innerHTML = reviews.map(r => `
-    <div class="review-card">
-      <div class="review-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div>
-      <p class="review-text">"${r.text}"</p>
-      <div class="review-author">
-        <div class="review-avatar">${r.initials}</div>
-        <div>
-          <div class="review-name">${r.name}</div>
-          <div class="review-meta">${r.city} · ${r.service}</div>
+  if (grid) {
+    grid.innerHTML = reviews.map(r => `
+      <div class="voice">
+        <div class="voice-stars">${'★'.repeat(r.stars)}${'☆'.repeat(5 - r.stars)}</div>
+        <p class="voice-text">«${r.text}»</p>
+        <div class="voice-author">
+          <div class="voice-ava">${r.i}</div>
+          <div><div class="voice-name">${r.name}</div><div class="voice-meta">${r.city} · ${r.srv}</div></div>
         </div>
-      </div>
-    </div>
-  `).join('');
-}
-
-renderReviews();
-
-// ===== OPEN TELEGRAM SAFELY (https only, no tg://) =====
-function openTelegram(extraText) {
-  const base = 'https://t.me/+77755837977';
-  const url = extraText ? `${base}?text=${encodeURIComponent(extraText)}` : base;
-  try {
-    const win = window.open(url, '_blank', 'noopener,noreferrer');
-    if (!win || win.closed || typeof win.closed === 'undefined') {
-      window.location.href = url;
-    }
-  } catch (e) {
-    window.location.href = url;
+      </div>`).join('');
   }
-}
 
-// Patch ALL tg links
-document.querySelectorAll('a[href*="t.me"]').forEach(a => {
-  a.addEventListener('click', function(e) {
-    e.preventDefault();
-    openTelegram();
-  });
+  // ===== TELEGRAM =====
+  function openTg() {
+    const url = 'https://t.me/+77755837977';
+    try { const w = window.open(url, '_blank', 'noopener,noreferrer'); if (!w) location.href = url; }
+    catch (e) { location.href = url; }
+  }
+  document.querySelectorAll('a[href*="t.me"]').forEach(a =>
+    a.addEventListener('click', e => { e.preventDefault(); openTg(); }));
+
+  // ===== SMOOTH NAV =====
+  document.querySelectorAll('a[href^="#"]').forEach(a =>
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+    }));
+
 });
-
-// ===== CONTACT FORM =====
-const sendBtn = document.getElementById('sendToTg');
-if (sendBtn) {
-  sendBtn.addEventListener('click', () => {
-    const nameEl = document.getElementById('nameInput');
-    const questionEl = document.getElementById('questionInput');
-    const name = nameEl ? nameEl.value.trim() : '';
-    const question = questionEl ? questionEl.value.trim() : '';
-    if (!name && !question) {
-      alert('Пожалуйста, заполните имя или вопрос');
-      return;
-    }
-    const msg = `Привет, Косандра!\n\nИмя: ${name || 'не указано'}\n\nВопрос: ${question || 'не указан'}`;
-    openTelegram(msg);
-  });
-}
-
-// ===== SMOOTH NAV =====
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const target = document.querySelector(a.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  });
-});
-
-// ===== CURSOR GLOW (desktop only) =====
-if (window.innerWidth > 768) {
-  const cursor = document.createElement('div');
-  cursor.style.cssText = `
-    position: fixed; width: 300px; height: 300px;
-    border-radius: 50%; pointer-events: none; z-index: 999;
-    background: radial-gradient(circle, rgba(201,168,76,0.04), transparent 70%);
-    transform: translate(-50%, -50%);
-    transition: left 0.1s, top 0.1s;
-  `;
-  document.body.appendChild(cursor);
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top = e.clientY + 'px';
-  });
-}
-
-}); // end DOMContentLoaded

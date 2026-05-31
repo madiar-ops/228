@@ -3,371 +3,229 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Косандра Ленорман — Тайновидящая | Гадание онлайн</title>
-<meta name="description" content="Косандра Ленорман — профессиональный таролог и ясновидящая. Точные предсказания, гадание на Таро, ленорман, руны. Онлайн консультации.">
+<title>Косандра Ленорман — Альманах Судьбы · Гадание Таро</title>
+<meta name="description" content="Косандра Ленорман — потомственная ясновидящая и таролог. Расклады Таро, Ленорман, руны, нумерология. Онлайн-консультации по Казахстану.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600&family=Marcellus&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- Particle canvas background -->
-<canvas id="starCanvas"></canvas>
+<div class="noise"></div>
+<canvas id="fx"></canvas>
 
-<!-- Floating orbs -->
-<div class="orb orb-1"></div>
-<div class="orb orb-2"></div>
-<div class="orb orb-3"></div>
-
-<!-- Mystic smoke overlay -->
-<div class="smoke-overlay"></div>
+<!-- SIDE RAIL -->
+<div class="rail rail-left">
+  <span class="rail-text">КОСАНДРА · ЛЕНОРМАН · ТАЙНОВИДЯЩАЯ</span>
+</div>
+<div class="rail rail-right">
+  <a href="https://t.me/+77755837977" target="_blank" rel="noopener" class="rail-tg">TELEGRAM ↗</a>
+</div>
 
 <!-- HEADER -->
-<header class="header" id="header">
-  <div class="header-inner">
-    <div class="logo-wrap">
-      <div class="logo-sigil">✦</div>
-      <div class="logo-text">
-        <span class="logo-name">Косандра</span>
-        <span class="logo-surname">Ленорман</span>
-      </div>
-    </div>
-    <nav class="nav">
-      <a href="#services">Услуги</a>
-      <a href="#about">Обо мне</a>
-      <a href="#reviews">Отзывы</a>
-      <a href="#contact">Контакты</a>
-    </nav>
-    <a class="tg-btn header-tg" href="https://t.me/+77755837977" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.02 9.52c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.883.701z"/></svg>
-      Написать
+<header class="hdr" id="hdr">
+  <div class="hdr-in">
+    <a href="#top" class="brand">
+      <span class="brand-glyph">✶</span>
+      <span class="brand-name">Косандра<em>Ленорман</em></span>
     </a>
-    <button class="burger" id="burger" aria-label="Меню">
-      <span></span><span></span><span></span>
-    </button>
+    <nav class="nav">
+      <a href="#oracle">Оракул</a>
+      <a href="#about">Хранительница</a>
+      <a href="#ritual">Ритуал</a>
+      <a href="#voices">Голоса</a>
+    </nav>
+    <a class="cta-mini" href="https://t.me/+77755837977" target="_blank" rel="noopener">Спросить судьбу</a>
+    <button class="burger" id="burger" aria-label="Меню"><span></span><span></span></button>
   </div>
-  <div class="mobile-nav" id="mobileNav">
-    <a href="#services" class="mob-link">Услуги</a>
-    <a href="#about" class="mob-link">Обо мне</a>
-    <a href="#reviews" class="mob-link">Отзывы</a>
-    <a href="#contact" class="mob-link">Контакты</a>
+  <div class="mnav" id="mnav">
+    <a href="#oracle">Оракул</a>
+    <a href="#about">Хранительница</a>
+    <a href="#ritual">Ритуал</a>
+    <a href="#voices">Голоса</a>
+    <a href="https://t.me/+77755837977" target="_blank" rel="noopener">Спросить судьбу</a>
   </div>
 </header>
 
 <!-- HERO -->
-<section class="hero" id="hero">
-  <div class="hero-content">
-    <div class="hero-badge reveal">✦ Более 15 лет практики ✦</div>
-    <h1 class="hero-title reveal">
-      <span class="line-1">Косандра</span>
-      <span class="line-2">Ленорман</span>
+<section class="hero" id="top">
+  <div class="hero-meta reveal">
+    <span>Альманах Судьбы</span>
+    <span>Алматы · Est. MMIX</span>
+  </div>
+  <div class="hero-main">
+    <h1 class="hero-title">
+      <span class="ht-line reveal">Карты</span>
+      <span class="ht-line ht-em reveal">помнят</span>
+      <span class="ht-line reveal">то, что вы<span class="ht-small"> забыли</span></span>
     </h1>
-    <p class="hero-subtitle reveal">Тайновидящая · Таролог · Нумеролог</p>
-    <p class="hero-desc reveal">
-      Я открою завесу судьбы и помогу вам увидеть то,<br>
-      что скрыто от обычного взгляда. Прошлое, настоящее и будущее —<br>
-      всё связано невидимыми нитями, которые я умею читать.
-    </p>
-    <div class="hero-btns reveal">
-      <a href="https://t.me/+77755837977" target="_blank" rel="noopener" class="btn-primary">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.02 9.52c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.883.701z"/></svg>
-        Получить консультацию
+    <div class="hero-side reveal">
+      <div class="hero-emblem">
+        <div class="emblem-ring"></div>
+        <div class="emblem-star">✶</div>
+        <div class="emblem-eye">𓂀</div>
+      </div>
+      <p class="hero-blurb">
+        Я открываю людям то, что скрыто за пеленой повседневности.
+        Расклад — это не предсказание, а зеркало вашей собственной судьбы.
+      </p>
+      <a href="https://t.me/+77755837977" target="_blank" rel="noopener" class="btn btn-fill">
+        Получить расклад →
       </a>
-      <a href="#services" class="btn-secondary">Узнать больше</a>
-    </div>
-    <div class="hero-stats reveal">
-      <div class="stat"><span class="stat-num" data-target="3700">0</span><span class="stat-label">Довольных клиентов</span></div>
-      <div class="stat-divider">✦</div>
-      <div class="stat"><span class="stat-num" data-target="15">0</span><span class="stat-label">Лет практики</span></div>
-      <div class="stat-divider">✦</div>
-      <div class="stat"><span class="stat-num" data-target="98">0</span><span class="stat-percent">%</span><span class="stat-label">Точность предсказаний</span></div>
     </div>
   </div>
-  <div class="hero-visual">
-    <div class="crystal-ball">
-      <div class="ball-inner">
-        <div class="ball-glow"></div>
-        <div class="ball-mist"></div>
-        <div class="ball-rune">☽ ✦ ☾</div>
-      </div>
-      <div class="ball-reflection"></div>
-    </div>
-    <div class="tarot-cards">
-      <div class="card card-left">
-        <div class="card-inner">
-          <div class="card-symbol">☽</div>
-          <div class="card-name">Луна</div>
-        </div>
-      </div>
-      <div class="card card-center">
-        <div class="card-inner">
-          <div class="card-symbol">★</div>
-          <div class="card-name">Звезда</div>
-        </div>
-      </div>
-      <div class="card card-right">
-        <div class="card-inner">
-          <div class="card-symbol">☉</div>
-          <div class="card-name">Солнце</div>
-        </div>
-      </div>
-    </div>
+  <div class="hero-foot reveal">
+    <div class="hf-stat"><b data-target="3700">0</b><span>обращений</span></div>
+    <div class="hf-stat"><b data-target="15">0</b><span>лет практики</span></div>
+    <div class="hf-stat"><b data-target="98" data-suffix="%">0</b><span>точность</span></div>
+    <div class="hf-scroll">прокрутите вниз ↓</div>
   </div>
 </section>
 
 <!-- MARQUEE -->
-<div class="marquee-wrap">
-  <div class="marquee-track">
-    <span>✦ Таро</span><span>✦ Ленорман</span><span>✦ Руны</span><span>✦ Нумерология</span><span>✦ Совместимость</span><span>✦ Порча и снятие</span><span>✦ Любовная магия</span><span>✦ Астрология</span>
-    <span>✦ Таро</span><span>✦ Ленорман</span><span>✦ Руны</span><span>✦ Нумерология</span><span>✦ Совместимость</span><span>✦ Порча и снятие</span><span>✦ Любовная магия</span><span>✦ Астрология</span>
+<div class="strip">
+  <div class="strip-row">
+    <span>ТАРО</span><i>✶</i><span>ЛЕНОРМАН</span><i>✶</i><span>РУНЫ</span><i>✶</i><span>НУМЕРОЛОГИЯ</span><i>✶</i><span>СОВМЕСТИМОСТЬ</span><i>✶</i><span>ОЧИЩЕНИЕ</span><i>✶</i>
+    <span>ТАРО</span><i>✶</i><span>ЛЕНОРМАН</span><i>✶</i><span>РУНЫ</span><i>✶</i><span>НУМЕРОЛОГИЯ</span><i>✶</i><span>СОВМЕСТИМОСТЬ</span><i>✶</i><span>ОЧИЩЕНИЕ</span><i>✶</i>
   </div>
 </div>
 
-<!-- SERVICES -->
-<section class="services" id="services">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-badge">Мои практики</div>
-      <h2 class="section-title">Что я могу<br>открыть для вас</h2>
-    </div>
-    <div class="services-grid">
-      <div class="service-card reveal" data-delay="0">
-        <div class="service-icon">🃏</div>
+<!-- ORACLE / SERVICES -->
+<section class="oracle" id="oracle">
+  <div class="sec-label reveal"><span>I</span> Оракул предлагает</div>
+  <div class="oracle-list">
+    <article class="ora reveal">
+      <div class="ora-no">01</div>
+      <div class="ora-body">
         <h3>Таро Уэйта</h3>
-        <p>Классический расклад, раскрывающий суть любой ситуации — любовь, работа, семья, здоровье. Точность до мельчайших деталей.</p>
-        <div class="service-price">от 5 000 ₸</div>
-        <a href="https://t.me/+77755837977" target="_blank" class="service-link">Записаться →</a>
+        <p>Классический расклад на любую ситуацию — отношения, дело, выбор пути. Карты раскрывают скрытые причины и указывают верное решение.</p>
       </div>
-      <div class="service-card reveal" data-delay="100">
-        <div class="service-icon">🔮</div>
+      <div class="ora-side"><span class="ora-price">от 5 000 ₸</span><a href="https://t.me/+77755837977" target="_blank" class="ora-go">Спросить</a></div>
+    </article>
+    <article class="ora reveal">
+      <div class="ora-no">02</div>
+      <div class="ora-body">
         <h3>Карты Ленорман</h3>
-        <p>Авторская система предсказаний, доставшаяся мне по наследству. Дают конкретные ответы без размытых толкований.</p>
-        <div class="service-price">от 6 000 ₸</div>
-        <a href="https://t.me/+77755837977" target="_blank" class="service-link">Записаться →</a>
+        <p>Фамильная система, переданная мне по наследству. Даёт точные, конкретные ответы — без туманных формулировок и общих фраз.</p>
       </div>
-      <div class="service-card reveal" data-delay="200">
-        <div class="service-icon">ᚱ</div>
+      <div class="ora-side"><span class="ora-price">от 6 000 ₸</span><a href="https://t.me/+77755837977" target="_blank" class="ora-go">Спросить</a></div>
+    </article>
+    <article class="ora reveal">
+      <div class="ora-no">03</div>
+      <div class="ora-body">
         <h3>Рунический расклад</h3>
-        <p>Древние скандинавские символы не лгут. Руны укажут на скрытые препятствия и энергии, влияющие на вашу судьбу.</p>
-        <div class="service-price">от 5 500 ₸</div>
-        <a href="https://t.me/+77755837977" target="_blank" class="service-link">Записаться →</a>
+        <p>Древние скандинавские символы укажут на скрытые препятствия и энергии, что влияют на вашу жизнь именно сейчас.</p>
       </div>
-      <div class="service-card reveal" data-delay="0">
-        <div class="service-icon">♾</div>
+      <div class="ora-side"><span class="ora-price">от 5 500 ₸</span><a href="https://t.me/+77755837977" target="_blank" class="ora-go">Спросить</a></div>
+    </article>
+    <article class="ora ora-feat reveal">
+      <div class="ora-no">04</div>
+      <div class="ora-body">
+        <h3>Полная диагностика судьбы <span class="ora-tag">избранное</span></h3>
+        <p>Глубокий синтез: Таро, Ленорман и нумерология вместе. Полная карта прошлого, настоящего и вектор вашего будущего.</p>
+      </div>
+      <div class="ora-side"><span class="ora-price">от 15 000 ₸</span><a href="https://t.me/+77755837977" target="_blank" class="ora-go">Спросить</a></div>
+    </article>
+    <article class="ora reveal">
+      <div class="ora-no">05</div>
+      <div class="ora-body">
         <h3>Нумерология судьбы</h3>
-        <p>По дате рождения и имени составлю ваш личный код судьбы. Узнайте свои сильные стороны и опасные периоды жизни.</p>
-        <div class="service-price">от 4 000 ₸</div>
-        <a href="https://t.me/+77755837977" target="_blank" class="service-link">Записаться →</a>
+        <p>По дате рождения и имени составлю ваш личный код — таланты, сильные стороны и периоды, требующие внимания.</p>
       </div>
-      <div class="service-card reveal featured" data-delay="100">
-        <div class="featured-badge">Популярное</div>
-        <div class="service-icon">💫</div>
-        <h3>Полная диагностика судьбы</h3>
-        <p>Комплексный анализ: Таро + Ленорман + нумерология. Получите полную картину прошлого, настоящего и вектор будущего.</p>
-        <div class="service-price">от 15 000 ₸</div>
-        <a href="https://t.me/+77755837977" target="_blank" class="service-link">Записаться →</a>
+      <div class="ora-side"><span class="ora-price">от 4 000 ₸</span><a href="https://t.me/+77755837977" target="_blank" class="ora-go">Спросить</a></div>
+    </article>
+    <article class="ora reveal">
+      <div class="ora-no">06</div>
+      <div class="ora-body">
+        <h3>Очищение и защита</h3>
+        <p>Диагностика негатива, сглаза и родовых программ. Энергетическое очищение. Только светлые практики — без вреда.</p>
       </div>
-      <div class="service-card reveal" data-delay="200">
-        <div class="service-icon">🌙</div>
-        <h3>Снятие негатива</h3>
-        <p>Диагностика порчи, сглаза и родовых программ. Энергетическое очищение и защита. Работаю только с белой магией.</p>
-        <div class="service-price">от 20 000 ₸</div>
-        <a href="https://t.me/+77755837977" target="_blank" class="service-link">Записаться →</a>
-      </div>
-    </div>
+      <div class="ora-side"><span class="ora-price">от 20 000 ₸</span><a href="https://t.me/+77755837977" target="_blank" class="ora-go">Спросить</a></div>
+    </article>
   </div>
 </section>
 
 <!-- ABOUT -->
 <section class="about" id="about">
-  <div class="container">
-    <div class="about-grid">
-      <div class="about-visual reveal">
-        <div class="about-portrait">
-          <div class="portrait-ring ring-1"></div>
-          <div class="portrait-ring ring-2"></div>
-          <div class="portrait-ring ring-3"></div>
-          <div class="portrait-center">
-            <div class="portrait-symbol">☽<br>✦<br>☾</div>
-          </div>
-        </div>
-        <div class="about-symbol-1">♆</div>
-        <div class="about-symbol-2">☿</div>
-        <div class="about-symbol-3">♀</div>
+  <div class="sec-label reveal"><span>II</span> Хранительница карт</div>
+  <div class="about-grid">
+    <div class="about-portrait reveal">
+      <div class="ap-frame">
+        <div class="ap-glyph">☽<br>✶<br>☾</div>
+        <div class="ap-corner tl">✦</div>
+        <div class="ap-corner tr">✦</div>
+        <div class="ap-corner bl">✦</div>
+        <div class="ap-corner br">✦</div>
       </div>
-      <div class="about-text reveal">
-        <div class="section-badge">Обо мне</div>
-        <h2 class="section-title">Косандра Ленорман</h2>
-        <p class="about-lead">Потомственная ясновидящая в пятом поколении. Дар открылся в 14 лет — с тех пор я не изменяла своему призванию.</p>
-        <p>Родилась в Алматы в семье, где мистические знания передавались из уст в уста столетиями. Прошла обучение у наставников в России, Украине и Индии. Сертифицированный таролог и нумеролог.</p>
-        <p>Я не занимаюсь «чёрной магией» — только диагностика, ясновидение и работа со светлыми силами. Консультирую людей по всему Казахстану и онлайн.</p>
-        <div class="about-features">
-          <div class="about-feature">
-            <div class="af-icon">✦</div>
-            <div>
-              <strong>Потомственный дар</strong>
-              <p>Пятое поколение ясновидящих в семье</p>
-            </div>
-          </div>
-          <div class="about-feature">
-            <div class="af-icon">✦</div>
-            <div>
-              <strong>Только белая магия</strong>
-              <p>Работаю исключительно с позитивными практиками</p>
-            </div>
-          </div>
-          <div class="about-feature">
-            <div class="af-icon">✦</div>
-            <div>
-              <strong>Полная конфиденциальность</strong>
-              <p>Всё сказанное остаётся между нами</p>
-            </div>
-          </div>
-        </div>
-        <a href="https://t.me/+77755837977" target="_blank" class="btn-primary">
-          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.02 9.52c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.883.701z"/></svg>
-          Задать вопрос в Telegram
-        </a>
-      </div>
+      <div class="ap-caption">Косандра Ленорман</div>
+    </div>
+    <div class="about-txt reveal">
+      <p class="about-drop"><span>П</span>отомственная ясновидящая в пятом поколении. Дар открылся в четырнадцать лет — и с тех пор я ни разу не свернула с этого пути.</p>
+      <p>Я родилась в Алматы, в семье, где знания о картах и судьбе передавались из поколения в поколение. Прошла обучение у наставников в России, Украине и Индии. Сегодня я консультирую людей по всему Казахстану и онлайн — из любой точки мира.</p>
+      <blockquote>«Судьба — не приговор, а карта дорог. Я лишь помогаю её прочесть.»</blockquote>
+      <ul class="about-marks">
+        <li><b>05</b> поколений ясновидящих в роду</li>
+        <li><b>—</b> только светлые практики, без чёрной магии</li>
+        <li><b>∞</b> полная конфиденциальность всегда</li>
+      </ul>
+      <a href="https://t.me/+77755837977" target="_blank" rel="noopener" class="btn btn-line">Задать вопрос Косандре →</a>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="howto">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-badge">Как это работает</div>
-      <h2 class="section-title">Три шага<br>к ответам</h2>
+<!-- RITUAL / HOW -->
+<section class="ritual" id="ritual">
+  <div class="sec-label reveal"><span>III</span> Как проходит ритуал</div>
+  <div class="ritual-steps">
+    <div class="rstep reveal">
+      <div class="rs-no">i</div>
+      <h3>Вы пишете</h3>
+      <p>Связываетесь со мной в Telegram и рассказываете, что вас тревожит. Задаёте свой вопрос — любой.</p>
     </div>
-    <div class="steps-grid">
-      <div class="step reveal" data-delay="0">
-        <div class="step-num">01</div>
-        <div class="step-icon">💬</div>
-        <h3>Напишите мне</h3>
-        <p>Свяжитесь со мной в Telegram. Расскажите о своей ситуации — задайте вопросы, которые вас тревожат.</p>
-      </div>
-      <div class="step-arrow">→</div>
-      <div class="step reveal" data-delay="150">
-        <div class="step-num">02</div>
-        <div class="step-icon">🔮</div>
-        <h3>Сеанс гадания</h3>
-        <p>Я проведу полный сеанс с выбранным инструментом. Всё онлайн — вы можете находиться в любой точке мира.</p>
-      </div>
-      <div class="step-arrow">→</div>
-      <div class="step reveal" data-delay="300">
-        <div class="step-num">03</div>
-        <div class="step-icon">✨</div>
-        <h3>Получите ответы</h3>
-        <p>Подробное толкование с рекомендациями. Вы получите ясность и понимание того, как действовать дальше.</p>
-      </div>
+    <div class="rs-link reveal">✶</div>
+    <div class="rstep reveal" data-delay="120">
+      <div class="rs-no">ii</div>
+      <h3>Я раскрываю карты</h3>
+      <p>Провожу полный расклад выбранным инструментом. Всё происходит онлайн — где бы вы ни были.</p>
+    </div>
+    <div class="rs-link reveal" data-delay="120">✶</div>
+    <div class="rstep reveal" data-delay="240">
+      <div class="rs-no">iii</div>
+      <h3>Судьба отвечает</h3>
+      <p>Вы получаете подробное толкование и рекомендации. Обретаете ясность и понимание, как действовать.</p>
     </div>
   </div>
 </section>
 
-<!-- REVIEWS -->
-<section class="reviews" id="reviews">
-  <div class="container">
-    <div class="section-header reveal">
-      <div class="section-badge">Отзывы клиентов</div>
-      <h2 class="section-title">Что говорят<br>те, кто уже обратился</h2>
-    </div>
-    <div class="reviews-masonry" id="reviewsGrid">
-      <!-- Reviews injected by JS -->
-    </div>
-  </div>
+<!-- VOICES / REVIEWS -->
+<section class="voices" id="voices">
+  <div class="sec-label reveal"><span>IV</span> Голоса обратившихся</div>
+  <div class="voices-grid" id="reviewsGrid"></div>
 </section>
 
 <!-- CTA -->
-<section class="cta-section">
-  <div class="cta-inner reveal">
-    <div class="cta-glow"></div>
-    <div class="section-badge">Начните прямо сейчас</div>
-    <h2>Не ждите, пока жизнь<br>сделает выбор за вас</h2>
-    <p>Каждый день без ответов — это потерянное время. Я готова помочь вам прямо сейчас.</p>
-    <a href="https://t.me/+77755837977" target="_blank" rel="noopener" class="btn-primary btn-large">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.02 9.52c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.883.701z"/></svg>
-      Написать в Telegram
-    </a>
+<section class="final">
+  <div class="final-in reveal">
+    <div class="final-orn">✶ ✦ ✶</div>
+    <h2>Карты уже разложены.<br>Осталось задать вопрос.</h2>
+    <p>Каждый день без ответов — потерянное время. Я готова раскрыть вашу судьбу уже сегодня.</p>
+    <a href="https://t.me/+77755837977" target="_blank" rel="noopener" class="btn btn-fill btn-big">Написать в Telegram →</a>
+    <div class="final-hours">Ежедневно 9:00 — 23:00 · Алматы</div>
   </div>
 </section>
 
-<!-- CONTACT -->
-<section class="contact" id="contact">
-  <div class="container">
-    <div class="contact-grid">
-      <div class="contact-info reveal">
-        <div class="section-badge">Контакты</div>
-        <h2 class="section-title">Готова<br>ответить</h2>
-        <p>Я онлайн каждый день с 9:00 до 23:00 по времени Алматы. Отвечаю на каждое сообщение лично.</p>
-        <div class="contact-items">
-          <a href="https://t.me/+77755837977" target="_blank" class="contact-item">
-            <div class="ci-icon">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.02 9.52c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.883.701z"/></svg>
-            </div>
-            <div>
-              <span class="ci-label">Telegram</span>
-              <span class="ci-value">+7 775 583 79 77</span>
-            </div>
-          </a>
-          <div class="contact-item">
-            <div class="ci-icon">📍</div>
-            <div>
-              <span class="ci-label">Город</span>
-              <span class="ci-value">Алматы (онлайн по всему Казахстану)</span>
-            </div>
-          </div>
-          <div class="contact-item">
-            <div class="ci-icon">🕐</div>
-            <div>
-              <span class="ci-label">Режим работы</span>
-              <span class="ci-value">Ежедневно, 9:00 — 23:00</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="contact-form-wrap reveal">
-        <div class="contact-form">
-          <h3>Задайте вопрос</h3>
-          <p class="form-note">Напишите свой вопрос — я отвечу вам в Telegram</p>
-          <div class="form-group">
-            <label>Ваше имя</label>
-            <input type="text" id="nameInput" placeholder="Как вас зовут?">
-          </div>
-          <div class="form-group">
-            <label>Ваш вопрос</label>
-            <textarea id="questionInput" placeholder="Опишите вашу ситуацию или задайте вопрос..." rows="4"></textarea>
-          </div>
-          <button class="btn-primary" id="sendToTg">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.02 9.52c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.883.701z"/></svg>
-            Отправить через Telegram
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-inner">
-    <div class="footer-logo">
-      <div class="logo-sigil">✦</div>
-      <div class="logo-text">
-        <span class="logo-name">Косандра</span>
-        <span class="logo-surname">Ленорман</span>
-      </div>
-    </div>
-    <p class="footer-copy">© 2024 Косандра Ленорман. Все права защищены.</p>
-    <p class="footer-disclaimer">Услуги носят развлекательный характер. Результат зависит от индивидуальных обстоятельств.</p>
+<footer class="ftr">
+  <div class="ftr-in">
+    <span class="brand-glyph">✶</span>
+    <span class="brand-name">Косандра <em>Ленорман</em></span>
+    <p class="ftr-copy">© MMXXIV · Все права защищены</p>
+    <p class="ftr-note">Услуги носят развлекательный характер. Результат зависит от индивидуальных обстоятельств.</p>
   </div>
 </footer>
 
-<!-- Floating TG button -->
-<a href="https://t.me/+77755837977" target="_blank" rel="noopener" class="floating-tg" aria-label="Telegram">
+<a href="https://t.me/+77755837977" target="_blank" rel="noopener" class="fab" aria-label="Telegram">
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248l-2.02 9.52c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12l-6.871 4.326-2.962-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.883.701z"/></svg>
-  <span class="floating-pulse"></span>
 </a>
 
 <script src="app.js"></script>
